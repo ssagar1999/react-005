@@ -12,64 +12,34 @@ function App() {
 
   const [compressedImage, setCompressedImage] = useState("");
 
-  
-
-
 
   const handle = (e) => {
-
+    console.log(e)
     const imageFile = e.target.files[0];
-
     setOrigImage(imageFile);
-
-    setOrigImageFile(URL.createObjectURL(imageFile));
-
-    
-
+    setOrigImageFile(URL.createObjectURL(imageFile)); 
+    //setting it as blob
   };
 
-
-
   const handleCompressImage = (e) => {
-
-    e.preventDefault();
-
-
-
+    // e.preventDefault();
     const options = {
-
       maxSizeMB: 1,
-
       maxWidthOrHeight: 500,
-
       useWebWorker: true,
-
     };
-
-
-
+console.log(origImage)
     if (options.maxSizeMB >= origImage / 1024) {
-
       alert("Image is too small, cant be compressed");
-
       return 0;
-
     }
 
-
-
-    let output;
-
+    // let output;
     imageCompression(origImage, options).then((x) => {
-
-      output = x;
-
-
-
-      const downloadLink = URL.createObjectURL(output);
-
+      // output = x;
+      const downloadLink = URL.createObjectURL(x);
+      console.log(x, origImage, downloadLink)
       setCompressedImage(downloadLink);
-
     });
 
   };
@@ -78,25 +48,13 @@ function App() {
 
     <div className="App">
 
-      <h1></h1>
+      <div><div><div><div>
 
-      <div>
-
-        <div>
-
-          <div>
-
-            <div>
-
-              {origImageFile ? (
+              {origImageFile && 
 
                 <img style={{'width':'625px'}} src={origImageFile} />
 
-              ) : (
-
-       <p>...</p>
-
-              )}
+                }
 
             </div>
 
@@ -116,66 +74,29 @@ function App() {
 
             />
 
-            <h1></h1>
-
             {origImageFile && (
-
-              <button
-
-                primary
-
-                onClick={(e) => {
-
-                  handleCompressImage(e);
-
-                }}
-
-              >
-
-                {" "}
-
+              <button primary onClick={(e) => handleCompressImage(e)}>
                 Compress Image
-
               </button>
 
             )}
-
-            <h1></h1>
 
             {compressedImage && (
-
               <button>
-
                 <a href={compressedImage} download={'new-compressed-file'}>
-
-                  {" "}
-
                   Download Image
-
                 </a>
-
               </button>
-
             )}
 
           </div>
 
-          <div>
-
             <div>
-
-              {compressedImage ? (
-
+              {compressedImage && (
                 <img src={compressedImage} />
-              ) : (
-
-                <img src="http://navparivartan.in/wp-content/uploads/2018/11/placeholder.png" />
-
-              )}
+              ) }
 
             </div>
-
-          </div>
 
         </div>
 
